@@ -1,2 +1,2 @@
 # password-hash-verify-CSharp
-ASP.Net Core C#. password hashing with salt &amp; verification (encrypt &amp; decrypt style)
+ASP.Net Core C#. password hashing with salt & verification (encrypt & decrypt style). Password-Based Key Derivation Function 2
