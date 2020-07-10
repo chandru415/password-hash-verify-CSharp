@@ -12,6 +12,9 @@ namespace PasswordHashVerify
             string password = Console.ReadLine();
 
             var generatedHashPasssword = GenerateHashPassword(password);
+            var result = VerifyPassword(generatedHashPasssword, password);
+
+            Console.WriteLine($"result: {result}");
             Console.ReadLine();
         }
 
@@ -41,6 +44,19 @@ namespace PasswordHashVerify
             return $"{hashed}:{Convert.ToBase64String(salt)}";
         }
 
-
+        private static bool VerifyPassword(string hashedPasswordWithSalt, string passwordToCheck)
+        {
+            // retrieve both salt and password from 'hashedPasswordWithSalt'
+            var passwordAndHash = hashedPasswordWithSalt.Split(':');
+            if (passwordAndHash == null || passwordAndHash.Length != 2)
+                return false;
+            var salt = Convert.FromBase64String(passwordAndHash[1]);
+            if (salt == null)
+                return false;
+            // hash the given password
+            var hashOfpasswordToCheck = GenerateHashPassword(passwordToCheck, salt, true);
+            // compare both hashes
+            return String.Compare(passwordAndHash[0], hashOfpasswordToCheck) == 0;
+        }
     }
 }
